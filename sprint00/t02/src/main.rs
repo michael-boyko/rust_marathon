@@ -1,10 +1,15 @@
 mod wallet_mng;
 
 fn main() {
-    let size: i32 = 5;
-    let wallets = wallet_mng::creat_wallets(size);
+    let wallet = wallet_mng::creat_wallet(10);
+    println!("I've got {} septims in the wallet.", wallet.septims);
 
-    for wallet in wallets {
-        println!("{}", wallet.septims);
+    let mut i: i32 = 0;
+    let wallets = wallet_mng::creat_wallets(5);
+
+    for mut item in wallets {
+        item.septims = i * i;
+        println!("{} wallet: {} septims.", i, item.septims);
+        i += 1;
     }
 }
