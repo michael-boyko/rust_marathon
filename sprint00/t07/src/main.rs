@@ -1,5 +1,6 @@
 use std::io;
 use std::io::Write;
+use std::process;
 
 fn main() {
     loop {
@@ -24,8 +25,11 @@ fn command_handler(commands: Vec<&str>) {
     if commands.len() == 2 {
 println!("2");
     } else {
-println!("1");
-
+        let command = commands[0].trim();
+        match command {
+            "exit" => process::exit(0x0100),
+            _ => {},
+        }
     }
 }
 
