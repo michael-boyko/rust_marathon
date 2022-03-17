@@ -28,19 +28,17 @@ println!("2");
         let command = commands[0].trim();
         match command {
             "exit" => process::exit(0x0100),
+            "help" => print_help(),
             _ => {},
         }
     }
 }
 
-/*fn is_command_valid(command: &String) -> bool {
-    let mut ret: bool = false;
-    let parsed_command: Vec<&str> = command.split(' ').collect();
-
-    //println!("{:?}", parsed_command);
-    if parsed_command.len() < 3 {
-        println!("Yes!!!!!!!!!!!!!");
-    }
-
-    return ret;
-}*/
+fn print_help() {
+    println!("Available commands:");
+    println!("1. insert <itemType>");
+    println!("2. remove <itemType>");
+    println!("3. show");
+    println!("4. help");
+    println!("5. exit");
+}
