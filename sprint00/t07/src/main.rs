@@ -41,7 +41,24 @@ fn command_handler(commands: Vec<&str>, inv: &mut [char]) {
 }
 
 fn insert_item(inv: &mut [char], item: &str) {
-    println!("URA");
+    let targets: String = String::from("a f p w");
+    let mut i: usize = 0;
+
+    if targets.contains(item) {
+        let chars: Vec<char> = item.chars().collect();
+        while i < 12 {
+            if inv[i] == '-' {
+                inv[i] = chars[0];
+                break;
+            }
+            i += 1;
+        }
+        if i == 12 {
+            println!("Inventory is full.");
+        }
+    } else {
+        println!("Invalid item.");
+    }
 }
 
 fn print_help() {
