@@ -22,16 +22,26 @@ fn main() {
 
 fn command_handler(commands: Vec<&str>, inv: &mut [char]) {
     if commands.len() == 2 {
-println!("2");
+        let command = commands[0].trim();
+        let item = commands[1].trim();
+        match command {
+            "insert" => insert_item(inv, &item),
+            //"remove" => ,
+            _ => println!("Invalid command."),
+        }
     } else {
         let command = commands[0].trim();
         match command {
             "exit" => process::exit(0x0100),
             "help" => print_help(),
             "show" => println!("Inventory {:?}", inv),
-            _ => {},
+            _ => println!("Invalid command."),
         }
     }
+}
+
+fn insert_item(inv: &mut [char], item: &str) {
+    println!("URA");
 }
 
 fn print_help() {
