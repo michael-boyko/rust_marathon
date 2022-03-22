@@ -1,9 +1,10 @@
 use std::io;
 use std::io::Write;
 use std::process;
+use std::collections::LinkedList;
 
 fn main() {
-    let mut inventory: [char; 12] = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',];
+    let mut inventory: LinkedList<char> = LinkedList::from(['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',]);
 
     loop {
         let mut input = String::new();
@@ -20,19 +21,19 @@ fn main() {
     }
 }
 
-fn command_handler(commands: Vec<&str>, inv: &mut [char]) {
+fn command_handler(commands: Vec<&str>, inv: &mut LinkedList<char>) {
     if commands.len() == 2 {
         let command = commands[0].trim();
         let item = commands[1].trim();
         match command {
             "insert" => insert_item(inv, &item),
-            //"remove" => ,
+            "remove" => remove_item(inv, &item),
             _ => println!("Invalid command."),
         }
     } else {
         let command = commands[0].trim();
         match command {
-            "exit" => process::exit(0x0100),
+            "exit" => exit_command(),
             "help" => print_help(),
             "show" => println!("Inventory {:?}", inv),
             _ => println!("Invalid command."),
@@ -40,21 +41,45 @@ fn command_handler(commands: Vec<&str>, inv: &mut [char]) {
     }
 }
 
-fn insert_item(inv: &mut [char], item: &str) {
+fn insert_item(inv: &mut LinkedList<char>, item: &str) {
     let targets: String = String::from("a f p w");
-    let mut i: usize = 0;
+    let ch: char = item.chars().next().unwrap();
+    let mut is_full: bool = true;
 
     if targets.contains(item) {
-        let chars: Vec<char> = item.chars().collect();
-        while i < 12 {
-            if inv[i] == '-' {
-                inv[i] = chars[0];
+        for one in inv {
+            if *one == '-' {
+                *one = ch;
+                is_full = false;
+                println!("{} was inserted.", ch);
                 break;
             }
-            i += 1;
         }
-        if i == 12 {
+        if is_full == true {
             println!("Inventory is full.");
+        }
+    } else {
+        println!("Invalid item.");
+    }
+}
+
+fn remove_item(inv: &mut LinkedList<char>, item: &str) {
+    let targets: String = String::from("a f p w");
+    let ch: char = item.chars().next().unwrap();
+    let mut i: usize = 0;
+    
+    if targets.contains(item) {
+        if inv.contains(&ch) {
+            for one in inv {
+                if *one == ch {
+                    //inv.remove(i);
+                    //inv.push_back('-');
+                    break;
+                }
+                i += 1;
+            }
+        } else {
+            println!("Invalid item.");
         }
     } else {
         println!("Invalid item.");
@@ -68,4 +93,9 @@ fn print_help() {
     println!("3. show");
     println!("4. help");
     println!("5. exit");
+}
+
+fn exit_command() {
+    println!("Bye.");
+    process::exit(0x0100);
 }
