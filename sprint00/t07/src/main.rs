@@ -66,17 +66,15 @@ fn insert_item(inv: &mut LinkedList<char>, item: &str) {
 fn remove_item(inv: &mut LinkedList<char>, item: &str) {
     let targets: String = String::from("a f p w");
     let ch: char = item.chars().next().unwrap();
-    let mut i: usize = 0;
     
     if targets.contains(item) {
         if inv.contains(&ch) {
             for one in inv {
                 if *one == ch {
-                    //inv.remove(i);
-                    //inv.push_back('-');
+                    *one = '-';
+                    println!("{} was removed.", ch);
                     break;
                 }
-                i += 1;
             }
         } else {
             println!("Invalid item.");
