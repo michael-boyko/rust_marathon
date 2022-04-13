@@ -52,6 +52,7 @@ fn find_a_way(cities: Vec<City>) -> bool {
             find = true;
             break;
         }
+        way.clear();
         passed = 0;
         stamina = 0;
     }
